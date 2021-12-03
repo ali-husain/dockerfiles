@@ -5,6 +5,7 @@ LABEL authors="Daniel Lozano <dn.lozano.m@gmail.com>, Juan Alonso <juan.jalogut@
 RUN apt-get update && apt-get install -y --no-install-recommends \
   cron \
   git \
+  wget \
   gzip \
   libfreetype6-dev \
   libicu-dev \
@@ -21,6 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   sudo \
   openssh-client \
   libonig-dev \
+  libmagickwand-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure \
@@ -38,6 +40,8 @@ RUN docker-php-ext-install \
   xsl \
   zip \
   sockets
+
+RUN pecl install imagick && docker-php-ext-enable imagick
 
 # Remove libsodium and install upgrading version:
 RUN rm -f /usr/local/etc/php/conf.d/*sodium.ini \
